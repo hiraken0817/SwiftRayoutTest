@@ -29,8 +29,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: FooterCollectionReusableView.identifier
         )
+        
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = .red//collectionView本体のbackgroundcolor
         view.addSubview(collectionView)//viewの上にcollectionviewを乗っける
     }
     
@@ -39,8 +41,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collectionView.frame = view.bounds//あるUIViewに別のUIViewを同じサイズにして乗せたいケース
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 3//header,本体,fotterが１セクション、その繰り返しを何回するか
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8//召喚するやつの数
+        return 9//召喚するやつの数
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -86,12 +92,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(
-            width: (view.frame.size.width/2)-3,
-            height: (view.frame.size.width/2)-3)
+            width: (view.frame.size.width/3)-3,
+            height: (view.frame.size.width/3)-3)//"/3"はカラム数
     }
     
     //これでヘッダーのスペース確保
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section != 0{//0セクション目には出てこない
+            return .zero//ヘッダー出てこなくなる
+        }
         return CGSize(
             width: view.frame.size.width,
             height: view.frame.size.width/2)
