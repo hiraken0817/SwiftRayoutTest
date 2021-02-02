@@ -1,2 +1,2 @@
-# SwiftrayoutTest
+# SwiftRayoutTest
 レイアウトの実験
